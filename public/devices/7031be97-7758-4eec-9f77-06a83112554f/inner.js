@@ -64,7 +64,7 @@ export async function init(deviceId) {
 
         // 立即执行一次并设置定时器
         await updateData();
-        setInterval(updateData, 1000); // 每秒更新一次
+        setInterval(updateData, 1500); // 每1.5秒更新一次
 
         // 添加点击交互
         deviceDiv.onclick = () => window.location.href = `/devices/${deviceId}/control.html`;

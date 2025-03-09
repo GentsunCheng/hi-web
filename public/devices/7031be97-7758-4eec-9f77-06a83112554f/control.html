@@ -3,25 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sgp30 控制</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <title>空气质量</title>
+  <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
   <div class="container">
-    <h1>sgp30 控制</h1>
-    <p>Its a sensor to measure CO2 and TVOC</p>
+    <button type="button" onclick="window.location.href = '../../';" style="color: #efefef;"><img class="icon" src="../../assets/back.svg">&nbsp返回</button>
+    <h1 id="name">Air Quality</h1>
+    <p id="readme">This is an air quality sensor, it can be used to monitor the air quality.</p>
     <div class="current-status">
-      <h2>当前参数</h2>
-      <ul><li>co2: 400 ppm</li><li>tvoc: 0 ppb</li></ul>
+      <h2 id="current-status">Status</h2>
+      <ul><li id="co2-status"></li></ul>
+      <ul><li id="tvoc-status"></li></ul>
     </div>
-    <div class="adjustable-params">
-      <h2>可调参数</h2>
-      <p>此设备不可调，仅供查看。</p>
-    </div>
-    
-    <br>
-    <a href="../index.html">返回设备列表</a>
   </div>
-  <script src="../js/device.js"></script>
+  <script src="./control.js"></script>
 </body>
 </html>
