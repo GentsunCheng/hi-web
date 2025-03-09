@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>draperies 控制</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>draperies 控制</h1>
+    <p>This unit is an actuator that controls the draperies. It can be used to open or close the draperies.</p>
+    <div class="current-status">
+      <h2>当前参数</h2>
+      <ul><li>status: open</li></ul>
+    </div>
+    <div class="adjustable-params">
+      <h2>可调参数</h2>
+      <label for="status">status:</label>
+      <select id="status" name="status"><option value="open" selected>open</option><option value="closed" >closed</option></select><br>
+    </div>
+    <button type="button" onclick="sendControl(0)">发送指令</button>
+    <br>
+    <a href="../index.html">返回设备列表</a>
+  </div>
+  <script src="../js/device.js"></script>
+</body>
+</html>

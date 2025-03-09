@@ -1,0 +1,10 @@
+{
+    "zh-CN": {
+        "name": "sgp30",
+        "readme": "这是一个sgp30。可以用来测量CO2和TVOC。"
+    },
+    "en-US": {
+        "name": "sgp30",
+        "readme": "This is a sgp30. It can be used to measure CO2 and TVOC."
+    }
+}

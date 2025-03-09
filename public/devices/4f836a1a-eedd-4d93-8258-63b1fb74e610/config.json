@@ -1,0 +1,10 @@
+{
+    "zh-CN": {
+        "name": "门",
+        "readme": "这是一个门。可以用来打开和关闭门。"
+    },
+    "en-US": {
+        "name": "Door",
+        "readme": "This is a door. You can use it to open and close the door."
+    }
+}
