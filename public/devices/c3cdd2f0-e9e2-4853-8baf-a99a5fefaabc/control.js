@@ -1,30 +1,30 @@
 const API_BASE = '/api';
 let deviceId = null;
 let currentStatus = 'closed';
-let doorUUID = null; // 替换原来的常量
+let curtainUUID = null; // 替换原来的常量
 
 const translations = {
   'zh-CN': {
-    'name': '智能门锁',
-    'readme': '这是一个支持远程控制的智能门锁',
+    'name': '智能窗帘',
+    'readme': '这是一个支持远程控制的智能窗帘',
     'current-status': '当前状态',
     'control': '控制操作',
-    'status': { opened: '已开启', closed: '已关闭' },
-    'button': '立即开门',
+    'status': { open: '已开启', closed: '已关闭' },
+    'button': { open: '立即开启', closed: '立即关闭' },
     'error': '操作失败：',
-    'success': '开门指令已发送',
+    'success': { open: '开启指令已发送', closed: '关闭指令已发送' },
     'retry': '正在重试获取状态...',
     'config_error': '配置加载失败'
   },
   'en': {
-    'name': 'Smart Door',
-    'readme': 'A remotely controllable smart door',
+    'name': 'Smart Curtain',
+    'readme': 'A remotely controllable smart curtain',
     'current-status': 'Current Status',
     'control': 'Control',
-    'status': { opened: 'Open', closed: 'Closed' },
-    'button': 'Open Now',
+    'status': { open: 'Open', closed: 'Closed' },
+    'button': { open: 'Open Now', closed: 'Close Now' },
     'error': 'Operation failed: ',
-    'success': 'Open command sent',
+    'success': { open: 'Open command sent', closed: 'Close command sent' },
     'retry': 'Retrying status...',
     'config_error': 'Config load failed'
   }
@@ -78,7 +78,7 @@ function createToastContainer() {
     if (!response.ok) throw new Error('HTTP error');
     const config = await response.json();
     if (!config?.uuid) throw new Error('Missing UUID');
-    doorUUID = config.uuid;
+    curtainUUID = config.uuid;
   } catch (error) {
     const lang = navigator.language.startsWith('zh') ? 'zh-CN' : 'en';
     document.body.innerHTML = `
@@ -97,18 +97,20 @@ function getLanguage() {
 
 // 更新界面显示
 function updateUI(lang = getLanguage()) {
-  document.getElementById('status').textContent = translations[lang].status[currentStatus];
-  document.getElementById('send-control').textContent = translations[lang].button;
-}
+    document.getElementById('status').textContent = translations[lang].status[currentStatus];
+    // 根据当前状态显示相反的操作按钮文本
+    const buttonAction = currentStatus === 'closed' ? 'open' : 'closed';
+    document.getElementById('send-control').textContent = translations[lang].button[buttonAction];
+  }
 
 // 获取设备ID
 async function fetchDeviceId() {
   try {
     const response = await fetch(`${API_BASE}/devices`);
     const data = await response.json();
-    const doorDevice = data.devices.find(d => d.uuid === doorUUID);
-    deviceId = doorDevice?.id;
-    currentStatus = doorDevice?.param.present.status || 'closed';
+    const curtainDevice = data.devices.find(d => d.uuid === curtainUUID);
+    deviceId = curtainDevice?.id;
+    currentStatus = curtainDevice?.param.present.status || 'closed';
     updateUI();
   } catch (error) {
     console.error('Error fetching device ID:', error);
@@ -116,45 +118,53 @@ async function fetchDeviceId() {
 }
 
 // 实时获取门状态
-async function updateDoorStatus() {
-  try {
-    const response = await fetch(`${API_BASE}/devices`);
-    const data = await response.json();
-    const doorDevice = data.devices.find(d => d.uuid === doorUUID);
-    currentStatus = doorDevice?.param.present.status || 'closed';
-    updateUI();
-  } catch (error) {
-    console.error(translations[getLanguage()].retry, error);
+async function updateCurtainStatus() {
+    try {
+      const response = await fetch(`${API_BASE}/devices`);
+      const data = await response.json();
+      const curtainDevice = data.devices.find(d => d.uuid === curtainUUID);
+      // 保持与设备状态严格同步
+      currentStatus = curtainDevice?.param.present.status || 'closed';
+      updateUI();
+    } catch (error) {
+      console.error(translations[getLanguage()].retry, error);
+    }
   }
-}
 
 // 发送控制指令
-async function controlDoor() {
-  if (deviceId === null || deviceId === undefined) {
-    createToast('Device not initialized', 'error');
-    return;
+async function controlCurtain() {
+    if (deviceId === null || deviceId === undefined) {
+      createToast('Device not initialized', 'error');
+      return;
+    }
+  
+    const lang = getLanguage();
+    // 确定目标状态（与当前状态相反）
+    const targetAction = currentStatus === 'closed' ? 'open' : 'closed';
+    const targetStatus = targetAction === 'open' ? 'opened' : 'closed';
+  
+    try {
+      const response = await fetch(`${API_BASE}/control`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          actions: [{
+            id: deviceId,
+            param: { status: targetAction }  // 使用动作指令
+          }]
+        })
+      });
+  
+      if (!response.ok) throw new Error(translations[lang].error + response.status);
+      
+      // 立即更新本地状态（后续轮询会同步真实状态）
+      currentStatus = targetStatus;
+      updateUI(lang);
+      createToast(translations[lang].success[targetAction], 'success');
+    } catch (error) {
+      createToast(error.message, 'error');
+    }
   }
-
-  try {
-    const response = await fetch(`${API_BASE}/control`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        actions: [{
-          id: deviceId,
-          param: { status: "open" }
-        }]
-      })
-    });
-
-    if (!response.ok) throw new Error(translations[getLanguage()].error + response.status);
-    
-    createToast(translations[getLanguage()].success, 'success');
-    setTimeout(updateDoorStatus, 1000);
-  } catch (error) {
-    reateToast(error.message, 'error');
-  }
-}
 
 // 初始化
 document.addEventListener('DOMContentLoaded', async () => {
@@ -170,8 +180,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   await fetchDeviceId();
   
   // 设置定时状态更新
-  setInterval(updateDoorStatus, 2000);
+  setInterval(updateCurtainStatus, 2000);
   
   // 绑定按钮事件
-  document.getElementById('send-control').addEventListener('click', controlDoor);
+  document.getElementById('send-control').addEventListener('click', controlCurtain);
 });

@@ -2,10 +2,20 @@
     "uuid": "c3cdd2f0-e9e2-4853-8baf-a99a5fefaabc",
     "zh-CN": {
         "name": "窗帘",
-        "readme": "这是一个窗帘。可以用来打开和关闭窗帘。"
+        "readme": "这是一个窗帘。可以用来打开和关闭窗帘。",
+        "title": "当前状态",
+        "status": {
+            "open": "打开",
+            "closed": "关闭"
+        }
     },
     "en-US": {
         "name": "Curtain",
-        "readme": "This is a curtain. It can be used to open and close the curtain."
+        "readme": "This is a curtain. It can be used to open and close the curtain.",
+        "title": "Current status",
+        "status": {
+            "opened": "Open",
+            "closed": "Close"
+        }
     }
 }

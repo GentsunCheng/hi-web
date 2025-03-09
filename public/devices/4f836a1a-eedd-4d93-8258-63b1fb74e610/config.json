@@ -5,7 +5,7 @@
         "readme": "这是一个门。可以用来打开和关闭门。",
         "title": "当前状态",
         "status": {
-            "opened": "开启",
+            "opened": "打开",
             "closed": "关闭"
         }
     },

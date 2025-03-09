@@ -1,9 +1,7 @@
-(async () => {
-    const scriptTag = document.currentScript;
-    const deviceId = scriptTag.dataset.deviceId;
+export async function init(deviceId) {
     const deviceDiv = document.getElementById(`device-${deviceId}`);
 
-    console.log(`📌 inner.js 执行，设备 ID: ${deviceId}`);
+    console.log(`📌 inner.js 模块执行，设备 ID: ${deviceId}`);
 
     if (!deviceDiv) {
         console.error(`❌ 设备 div #device-${deviceId} 不存在！`);
@@ -41,7 +39,7 @@
         if (readmeElement) readmeElement.textContent = deviceInfo.readme;
 
         // 实时更新函数
-        const updateData = async () => {
+        async function updateData() {
             try {
                 const response = await fetch('/api/devices');
                 const devicesData = await response.json();
@@ -62,11 +60,11 @@
             } catch (err) {
                 console.error('数据更新失败:', err);
             }
-        };
+        }
 
         // 立即执行一次并设置定时器
         await updateData();
-        setInterval(updateData, 1000); // 每5秒更新一次
+        setInterval(updateData, 1000); // 每秒更新一次
 
         // 添加点击交互
         deviceDiv.onclick = () => window.location.href = `/devices/${deviceId}/control.html`;
@@ -76,4 +74,4 @@
         console.error(`❌ 初始化设备 ${deviceId} 失败`, err);
         deviceDiv.innerHTML = `<div class="error">设备加载失败: ${err.message}</div>`;
     }
-})();
+}

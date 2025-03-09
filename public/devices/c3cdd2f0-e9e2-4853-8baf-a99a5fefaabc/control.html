@@ -3,26 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>draperies 控制</title>
-  <link rel="stylesheet" href="../css/style.css">
+  <title>窗帘控制</title>
+  <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
   <div class="container">
-    <h1>draperies 控制</h1>
-    <p>This unit is an actuator that controls the draperies. It can be used to open or close the draperies.</p>
+    <button type="button" onclick="window.location.href = '../../';" style="color: #efefef;"><img class="icon" src="../../assets/back.svg">&nbsp返回</button>
+    <h1 id="name">Certain</h1>
+    <p id="readme">This is an certain, it can be opened or closed</p>
     <div class="current-status">
-      <h2>当前参数</h2>
-      <ul><li>status: open</li></ul>
+      <h2 id="current-status">Status</h2>
+      <ul><li id="status">Closed</li></ul>
     </div>
     <div class="adjustable-params">
-      <h2>可调参数</h2>
-      <label for="status">status:</label>
-      <select id="status" name="status"><option value="open" selected>open</option><option value="closed" >closed</option></select><br>
+      <h2 id="control">Control</h2>
     </div>
-    <button type="button" onclick="sendControl(0)">发送指令</button>
-    <br>
-    <a href="../index.html">返回设备列表</a>
+    <button type="button" id="send-control">Open</button>
   </div>
-  <script src="../js/device.js"></script>
+  <script src="./control.js"></script>
 </body>
 </html>

@@ -1,9 +1,8 @@
-(async () => {
-    const scriptTag = document.currentScript;
-    const deviceId = scriptTag.dataset.deviceId;
-    const deviceDiv = document.getElementById(`device-${deviceId}`);
+const API_BASE = '/api';
 
-    console.log(`📌 inner.js 执行，设备 ID: ${deviceId}`);
+// 初始化设备
+export async function init(deviceId) {
+    const deviceDiv = document.getElementById(`device-${deviceId}`);
 
     if (!deviceDiv) {
         console.error(`❌ 设备 div #device-${deviceId} 不存在！`);
@@ -11,32 +10,67 @@
     }
 
     try {
+        // 加载设备配置
         const configResponse = await fetch(`/devices/${deviceId}/config.json`);
-        if (!configResponse.ok) throw new Error(`config.json 加载失败: ${configResponse.status}`);
+        if (!configResponse.ok) throw new Error('config.json 加载失败');
         const configData = await configResponse.json();
 
+        // 加载设备模板
+        const innerResponse = await fetch(`/devices/${deviceId}/inner.html`);
+        if (!innerResponse.ok) throw new Error('inner.html 加载失败');
+        deviceDiv.innerHTML = await innerResponse.text();
+
+        // 初始化语言配置
         const userLanguage = navigator.language || 'en-US';
         const deviceInfo = configData[userLanguage] || configData['en-US'];
         console.log(`📌 使用语言 ${userLanguage}，解析后:`, deviceInfo);
 
-        const innerResponse = await fetch(`/devices/${deviceId}/inner.html`);
-        if (!innerResponse.ok) throw new Error(`inner.html 加载失败: ${innerResponse.status}`);
-        const innerHTML = await innerResponse.text();
-
-        deviceDiv.innerHTML = innerHTML;
-
+        // 获取 DOM 元素
         const nameElement = deviceDiv.querySelector('.device-name');
         const readmeElement = deviceDiv.querySelector('.device-readme');
+        const dataElement = deviceDiv.querySelector('.data');
 
+        // 设置静态内容
         if (nameElement) nameElement.textContent = deviceInfo.name;
-        else console.warn('⚠️ 未找到 .device-name 元素');
-
         if (readmeElement) readmeElement.textContent = deviceInfo.readme;
-        else console.warn('⚠️ 未找到 .device-readme 元素');
 
-        deviceDiv.onclick = () => window.location.href = `/devices/${deviceId}/control.html`;
+        // 状态更新函数
+        const updateStatus = async () => {
+            try {
+                const response = await fetch(`${API_BASE}/devices`);
+                const { devices } = await response.json();
+                const targetDevice = devices.find(d => d.uuid === deviceId);
+
+                if (!targetDevice) {
+                    console.warn('设备不在响应列表中');
+                    return;
+                }
+
+                const status = targetDevice.param.present.status;
+                if (dataElement) {
+                    dataElement.textContent = 
+                        `${deviceInfo.title}: ${deviceInfo.status[status] || '未知状态'}`;
+                }
+            } catch (err) {
+                console.error('状态更新失败', err);
+                if (dataElement) {
+                    dataElement.textContent = "状态获取失败，请重试";
+                }
+            }
+        };
+
+        // 启动轮询
+        updateStatus();
+        const timer = setInterval(updateStatus, 1000);
+
+        // 点击事件处理
         deviceDiv.style.cursor = 'pointer';
+        deviceDiv.addEventListener('click', () => {
+            clearInterval(timer); // 清理定时器
+            window.location.href = `/devices/${deviceId}/control.html`;
+        });
+
     } catch (err) {
-        console.error(`❌ 加载设备 ${deviceId} 数据失败`, err);
+        console.error(`❌ 初始化设备 ${deviceId} 失败`, err);
     }
-})();
+}
