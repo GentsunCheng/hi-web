@@ -70,6 +70,10 @@ app.post("/api/control", async (req, res) => {
     }
 });
 
+app.get("/api/control", async (req, res) => {
+    res.status(200).json({ status: "ok", message: "Server is running" });
+});
+
 // 监听端口
 app.listen(PORT, () => {
     console.log(`✅ 服务器运行在 http://localhost:${PORT}`);

@@ -3,26 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>door 控制</title>
+  <title>大门控制</title>
   <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
   <div class="container">
-    <h1>door 控制</h1>
-    <p>This is a door. It can be used to open and close the door.</p>
+    <button type="button" onclick="window.location.href = '../../index.html';" style="color: #efefef;"><img class="icon" src="../../assets/back.svg">&nbsp返回</button>
+    <h1 id="name">Main Gate</h1>
+    <p id="readme">This is a door. It can be used to open the door.</p>
     <div class="current-status">
-      <h2>当前参数</h2>
-      <ul><li>status: closed</li></ul>
+      <h2 id="current-status">Status</h2>
+      <ul><li id="status">Closed</li></ul>
     </div>
     <div class="adjustable-params">
-      <h2>可调参数</h2>
-      <label for="status">status:</label>
-      <select id="status" name="status"><option value="open" >open</option><option value="closed" selected>closed</option></select><br>
+      <h2 id="control">Control</h2>
     </div>
-    <button type="button" onclick="sendControl(2)">发送指令</button>
-    <br>
-    <a href="../../index.html">返回设备列表</a>
+    <button type="button" id="send-control">Open Door</button>
   </div>
-  <script src="../../js/device.js"></script>
+  <script src="./control.js"></script>
 </body>
 </html>

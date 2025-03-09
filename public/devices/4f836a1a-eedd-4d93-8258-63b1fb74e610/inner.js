@@ -1,3 +1,5 @@
+const API_BASE = '/api';
+let deviceId = null;
 (async () => {
     const scriptTag = document.currentScript;
     const deviceId = scriptTag.dataset.deviceId;
@@ -34,8 +36,10 @@
         if (readmeElement) readmeElement.textContent = deviceInfo.readme;
         else console.warn('⚠️ 未找到 .device-readme 元素');
 
+        // 容器点击跳转
         deviceDiv.onclick = () => window.location.href = `/devices/${deviceId}/control.html`;
         deviceDiv.style.cursor = 'pointer';
+
     } catch (err) {
         console.error(`❌ 加载设备 ${deviceId} 数据失败`, err);
     }
