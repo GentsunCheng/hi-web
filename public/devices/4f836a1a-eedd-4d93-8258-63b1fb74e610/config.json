@@ -2,10 +2,20 @@
     "uuid": "4f836a1a-eedd-4d93-8258-63b1fb74e610",
     "zh-CN": {
         "name": "门",
-        "readme": "这是一个门。可以用来打开和关闭门。"
+        "readme": "这是一个门。可以用来打开和关闭门。",
+        "title": "当前状态",
+        "status": {
+            "opened": "开启",
+            "closed": "关闭"
+        }
     },
     "en-US": {
         "name": "Door",
-        "readme": "This is a door. You can use it to open and close the door."
+        "readme": "This is a door. You can use it to open and close the door.",
+        "title": "Current status",
+        "status": {
+            "opened": "Open",
+            "closed": "Close"
+        }
     }
 }
