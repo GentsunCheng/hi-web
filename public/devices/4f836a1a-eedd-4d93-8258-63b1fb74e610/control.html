@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>大门控制</title>
+  <title id="title"></title>
   <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body>
   <div class="container">
     <button type="button" onclick="window.location.href = '../../';" style="color: #efefef;"><img class="icon" src="../../assets/back.svg">&nbsp返回</button>
-    <h1 id="name">Main Gate</h1>
-    <p id="readme">This is a door. It can be used to open the door.</p>
+    <h1 id="name"></h1>
+    <p id="readme"></p>
     <div class="current-status">
-      <h2 id="current-status">Status</h2>
-      <ul><li id="status">Closed</li></ul>
+      <h2 id="current-status"></h2>
+      <ul><li id="status"></li></ul>
     </div>
     <div class="adjustable-params">
-      <h2 id="control">Control</h2>
+      <h2 id="control"></h2>
     </div>
-    <button type="button" id="send-control">Open Door</button>
+    <button type="button" id="send-control"></button>
   </div>
   <script src="./control.js"></script>
 </body>

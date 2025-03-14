@@ -8,6 +8,7 @@ let wind_speed = null;
 
 const translations = {
   'zh-CN': {
+    'title': '天气信息',
     'name': '天气信息',
     'readme_inner': '天气信息，了解当前实时天气。',
     'current-status': '当前状态',
@@ -43,6 +44,7 @@ const translations = {
         }
   },
   'en': {
+      'title': 'Weather Info',
       'name': 'Weather Info',
       'readme_inner': 'Get real-time weather information.',
       'current-status': 'Current Status',

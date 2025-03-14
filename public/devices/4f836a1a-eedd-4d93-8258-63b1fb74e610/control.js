@@ -5,6 +5,7 @@ let doorUUID = null; // 替换原来的常量
 
 const translations = {
   'zh-CN': {
+    'title': '智能门锁控制',
     'name': '智能门锁',
     'readme': '这是一个支持远程控制的智能门锁',
     'current-status': '当前状态',
@@ -17,6 +18,7 @@ const translations = {
     'config_error': '配置加载失败'
   },
   'en': {
+    'title': 'Smart Door Control',
     'name': 'Smart Door',
     'readme': 'A remotely controllable smart door',
     'current-status': 'Current Status',

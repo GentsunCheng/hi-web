@@ -5,8 +5,9 @@ let curtainUUID = null; // 替换原来的常量
 
 const translations = {
   'zh-CN': {
+    'title': '智能窗帘控制',
     'name': '智能窗帘',
-    'readme': '这是一个支持远程控制的智能窗帘',
+    'readme': '远程控制的智能窗帘',
     'current-status': '当前状态',
     'control': '控制操作',
     'status': { open: '已开启', closed: '已关闭' },
@@ -17,6 +18,7 @@ const translations = {
     'config_error': '配置加载失败'
   },
   'en': {
+    'title': 'Smart Curtain Control',
     'name': 'Smart Curtain',
     'readme': 'A remotely controllable smart curtain',
     'current-status': 'Current Status',

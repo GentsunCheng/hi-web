@@ -4,7 +4,8 @@ let tvoc_status = null;
 
 const translations = {
   'zh-CN': {
-    'name': 'SGP30',
+    'title': '智能空气质量检测器',
+    'name': '空气质量检测器',
     'readme': '这是一个空气质量检测仪。可以用来测量CO2和TVOC。',
     'current-status': '当前状态',
     'co2': '二氧化碳浓度:',
@@ -13,8 +14,9 @@ const translations = {
     'config_error': '配置加载失败'
   },
   'en': {
-    'name': 'Smart Sgp30',
-    'readme': 'A remotely controllable smart sgp30',
+    'title': 'Smart Air Quality Monitor',
+    'name': 'Air Quality Monitor',
+    'readme': 'An air quality monitor that can measure CO2 and TVOC.',
     'current-status': 'Current Status',
     'co2': 'Carbon Dioxide Concentration:',
     'tvoc': 'Total Volatile Organic Compounds:',

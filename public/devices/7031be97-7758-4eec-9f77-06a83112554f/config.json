@@ -1,14 +1,14 @@
 {
     "uuid": "7031be97-7758-4eec-9f77-06a83112554f",
     "zh-CN": {
-        "name": "sgp30",
-        "readme": "这是一个sgp30。可以用来测量CO2和TVOC。",
+        "name": "空气质量检测器",
+        "readme": "这是一个智能空气质量检测仪。可以用来测量CO2和TVOC。",
         "co2": "二氧化碳",
         "tvoc": "有害气体"
     },
     "en-US": {
-        "name": "sgp30",
-        "readme": "This is a sgp30. It can be used to measure CO2 and TVOC.",
+        "name": "Smart Air Quality Monitor",
+        "readme": "An air quality monitor that can measure CO2 and TVOC.",
         "co2": "carbon dioxide",
         "tvoc": "hazardous gas"
 
