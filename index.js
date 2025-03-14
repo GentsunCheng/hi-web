@@ -27,10 +27,16 @@ app.get("/api/devices", async (req, res) => {
         });
         const uuidData = await uuidResponse.json();
 
-        // 设备信息添加 UUID
-        devicesData.devices.forEach((device, index) => {
-            device.uuid = uuidData[index]; // 确保设备数据有 UUID
-        });
+        // 设备信息添加 UUID，并删除没有 UUID 的设备
+        devicesData.devices = devicesData.devices
+            .map((device, index) => {
+                if (uuidData[index]) {
+                    device.uuid = uuidData[index];
+                    return device;
+                }
+                return null; // 标记需要删除的项
+            })
+            .filter(device => device !== null); // 过滤掉 null 值，即删除无 UUID 的设备
 
         res.json(devicesData);
     } catch (error) {
