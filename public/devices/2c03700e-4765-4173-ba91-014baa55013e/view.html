@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>天气信息</title>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+  <div class="container">
+    <button type="button" onclick="window.location.href = '../../';" style="color: #efefef;"><img class="icon" src="../../assets/back.svg">&nbsp返回</button>
+    <h1 id="name">Weather infomation</h1>
+    <p id="readme_inner">Weather Info, get current weather.</p>
+    <div class="current-status">
+      <h2 id="current-status">Status</h2>
+      <ul><li id="skycon"></li></ul>
+      <ul><li id="temp"></li></ul>
+      <ul><li id="apparent_temp"></li></ul>
+      <ul><li id="humidity"></li></ul>
+      <ul><li id="wind_speed"></li></ul>
+    </div>
+  </div>
+  <script src="./view.js"></script>
+</body>
+</html>

@@ -67,7 +67,7 @@ export async function init(deviceId) {
         setInterval(updateData, 1500); // 每1.5秒更新一次
 
         // 添加点击交互
-        deviceDiv.onclick = () => window.location.href = `/devices/${deviceId}/control.html`;
+        deviceDiv.onclick = () => window.location.href = `/devices/${deviceId}/view.html`;
         deviceDiv.style.cursor = 'pointer';
 
     } catch (err) {
