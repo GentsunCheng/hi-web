@@ -52,7 +52,7 @@ export async function init(deviceId) {
                 const apparent_temp = targetDevice.param.present.temp.apparent;
                 if (dataElement) {
                     dataElement.textContent = 
-                        `${deviceInfo.status.skycon}: ${weather} ${deviceInfo.status.temp}: ${temp}°C ${deviceInfo.status.apparent_temp}: ${apparent_temp}°C`;
+                        `${deviceInfo.status.skycon}: ${weather} ${deviceInfo.status.temp}: ${temp} ${deviceInfo.status.apparent_temp}: ${apparent_temp}`;
                 }
             } catch (err) {
                 console.error('状态更新失败', err);

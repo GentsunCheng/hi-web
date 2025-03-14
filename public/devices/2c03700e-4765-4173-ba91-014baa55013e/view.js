@@ -161,10 +161,10 @@ async function fetchDeviceId() {
     const weatherDevice = data.devices.find(d => d.uuid === weatherUUID);
     const weather = translations[getLanguage()].weather[`${weatherDevice.param.present.skycon}`];
     skycon = `${translations[getLanguage()].skycon} ${weather}`;
-    temp = `${translations[getLanguage()].temp} ${weatherDevice.param.present.temp.outdoor} °C`;
-    apparent_temp = `${translations[getLanguage()].apparent_temp} ${weatherDevice.param.present.temp.apparent} °C`;
-    humidity = `${translations[getLanguage()].humidity} ${weatherDevice.param.present.humidity} %`;
-    wind_speed = `${translations[getLanguage()].wind_speed} ${weatherDevice.param.present.wind_speed}/h`;
+    temp = `${translations[getLanguage()].temp} ${weatherDevice.param.present.temp.outdoor}`;
+    apparent_temp = `${translations[getLanguage()].apparent_temp} ${weatherDevice.param.present.temp.apparent}`;
+    humidity = `${translations[getLanguage()].humidity} ${weatherDevice.param.present.humidity}`;
+    wind_speed = `${translations[getLanguage()].wind_speed} ${weatherDevice.param.present.wind_speed}`;
     updateUI();
   } catch (error) {
     console.error('Error fetching device ID:', error);
@@ -180,10 +180,10 @@ async function updateWeatherStatus() {
       // 实际更新状态变量
       const weather = translations[getLanguage()].weather[`${weatherDevice.param.present.skycon}`];
       skycon = `${translations[getLanguage()].skycon} ${weather}`;
-      temp = `${translations[getLanguage()].temp} ${weatherDevice.param.present.temp.outdoor} °C`;
-      apparent_temp = `${translations[getLanguage()].apparent_temp} ${weatherDevice.param.present.temp.apparent} °C`;
-      humidity = `${translations[getLanguage()].humidity} ${weatherDevice.param.present.humidity} %`;
-      wind_speed = `${translations[getLanguage()].wind_speed} ${weatherDevice.param.present.wind_speed} km/h`;
+      temp = `${translations[getLanguage()].temp} ${weatherDevice.param.present.temp.outdoor}`;
+      apparent_temp = `${translations[getLanguage()].apparent_temp} ${weatherDevice.param.present.temp.apparent}`;
+      humidity = `${translations[getLanguage()].humidity} ${weatherDevice.param.present.humidity}`;
+      wind_speed = `${translations[getLanguage()].wind_speed} ${weatherDevice.param.present.wind_speed}`;
       
       updateUI();
     } catch (error) {
