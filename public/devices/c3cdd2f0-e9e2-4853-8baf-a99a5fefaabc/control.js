@@ -3,6 +3,11 @@ let deviceId = null;
 let currentStatus = 'closed';
 let curtainUUID = null; // 替换原来的常量
 
+
+document.addEventListener("contextmenu", function (event) {
+  event.preventDefault();
+})
+
 const translations = {
   'zh-CN': {
     'title': '智能窗帘控制',

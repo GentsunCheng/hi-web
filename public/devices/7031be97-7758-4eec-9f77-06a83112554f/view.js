@@ -2,6 +2,11 @@ const API_BASE = '/api';
 let co2_status = null;
 let tvoc_status = null;
 
+
+document.addEventListener("contextmenu", function (event) {
+  event.preventDefault();
+})
+
 const translations = {
   'zh-CN': {
     'title': '智能多功能传感器',

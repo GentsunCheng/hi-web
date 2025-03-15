@@ -62,4 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch (err) {
         console.error('加载设备列表失败', err);
     }
+    document.addEventListener("contextmenu", function (event) {
+        event.preventDefault();
+    })
 });

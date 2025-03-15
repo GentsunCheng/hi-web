@@ -6,12 +6,16 @@ let humidity = null;
 let wind_speed = null;
 
 
+document.addEventListener("contextmenu", function (event) {
+  event.preventDefault();
+})
+
 const translations = {
   'zh-CN': {
     'title': '天气信息',
     'name': '天气信息',
     'readme_inner': '天气信息，了解当前实时天气。',
-    'current-status': '当前状态',
+    'current-status': '当前天气',
     'skycon': '天气状况:',
     'temp': '温度:',
     'apparent_temp': '体感温度:',
@@ -47,7 +51,7 @@ const translations = {
       'title': 'Weather Info',
       'name': 'Weather Info',
       'readme_inner': 'Get real-time weather information.',
-      'current-status': 'Current Status',
+      'current-status': 'Current Weather',
       'skycon': 'Sky Condition:',
       'temp': 'Temperature:',
       'apparent_temp': 'Apparent Temperature:',
