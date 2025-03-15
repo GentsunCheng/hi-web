@@ -52,9 +52,12 @@ export async function init(deviceId) {
 
                 const co2 = `${currentDevice.param.present.co2.content}${currentDevice.param.present.co2.measure}`;
                 const tvoc = `${currentDevice.param.present.tvoc.content}${currentDevice.param.present.tvoc.measure}`;
+                const light = `${currentDevice.param.present.light.content}${currentDevice.param.present.light.measure}`;
+                const humidity = `${currentDevice.param.present.humidity.content}${currentDevice.param.present.humidity.measure}`;
+                const temperature = `${currentDevice.param.present.temperature.content}${currentDevice.param.present.temperature.measure}`;
                 
                 if (dataElement) {
-                    dataElement.textContent = `${deviceInfo.co2}: ${co2} ${deviceInfo.tvoc}: ${tvoc}`;
+                    dataElement.textContent = `${deviceInfo.co2}: ${co2} ${deviceInfo.tvoc}: ${tvoc} ${deviceInfo.light}: ${light} ${deviceInfo.temperature}: ${temperature} ${deviceInfo.humidity}: ${humidity}`;
                     console.log(`✅ 数据更新 ${new Date().toLocaleTimeString()}`);
                 }
             } catch (err) {

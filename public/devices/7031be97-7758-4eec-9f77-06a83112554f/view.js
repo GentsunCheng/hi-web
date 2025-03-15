@@ -4,24 +4,30 @@ let tvoc_status = null;
 
 const translations = {
   'zh-CN': {
-    'title': '智能空气质量检测器',
-    'name': '空气质量检测器',
-    'readme': '这是一个空气质量检测仪。可以用来测量CO2和TVOC。',
+    'title': '智能多功能传感器',
+    'name': '智能多传感器',
+    'readme': '这是一个多传感器来测量二氧化碳、有害气体、光照、温度和湿度。',
     'current-status': '当前状态',
     'co2': '二氧化碳浓度:',
     'tvoc': '有害气体浓度:',
+    'light': '光照强度:',
+    'temperature': '温度:',
+    'humidity': '湿度:',
     'retry': '正在重试获取状态...',
     'config_error': '配置加载失败'
   },
   'en': {
-    'title': 'Smart Air Quality Monitor',
-    'name': 'Air Quality Monitor',
-    'readme': 'An air quality monitor that can measure CO2 and TVOC.',
+    'title': 'Smart Multi-Sensor',
+    'name': 'Smart Multi-Sensor',
+    'readme': 'This is a multi-sensor to measure CO2, TVOC, light, temperature and humidity.',
     'current-status': 'Current Status',
-    'co2': 'Carbon Dioxide Concentration:',
-    'tvoc': 'Total Volatile Organic Compounds:',
-    'retry': 'Retrying status...',
-    'config_error': 'Config load failed'
+    'co2': 'CO2 Concentration:',
+    'tvoc': 'TVOC Concentration:',
+    'light': 'Light Intensity:',
+    'temperature': 'Temperature:',
+    'humidity': 'Humidity:',
+    'retry': 'Retrying to get status...',
+    'config_error': 'Failed to load configuration'
   }
 };
 
@@ -73,7 +79,7 @@ function createToastContainer() {
     if (!response.ok) throw new Error('HTTP error');
     const config = await response.json();
     if (!config?.uuid) throw new Error('Missing UUID');
-    sgp30UUID = config.uuid;
+    mutisensorUUID = config.uuid;
   } catch (error) {
     const lang = navigator.language.startsWith('zh') ? 'zh-CN' : 'en';
     document.body.innerHTML = `
@@ -94,6 +100,9 @@ function getLanguage() {
 function updateUI(lang = getLanguage()) {
     document.getElementById('co2-status').textContent = co2_status;
     document.getElementById('tvoc-status').textContent = tvoc_status;
+    document.getElementById('light-status').textContent = light_status;
+    document.getElementById('temperature-status').textContent = temperature_status;
+    document.getElementById('humidity-status').textContent = humidity_status;
   }
 
 // 获取设备ID
@@ -101,25 +110,30 @@ async function fetchDeviceId() {
   try {
     const response = await fetch(`${API_BASE}/devices`);
     const data = await response.json();
-    const sgp30Device = data.devices.find(d => d.uuid === sgp30UUID);
-    co2_status = `${translations[getLanguage()].co2} ${sgp30Device.param.present.co2.content} ${sgp30Device.param.present.co2.measure}`;
-    tvoc_status = `${translations[getLanguage()].tvoc} ${sgp30Device.param.present.tvoc.content} ${sgp30Device.param.present.tvoc.measure}`
+    const mutisensorDevice = data.devices.find(d => d.uuid === mutisensorUUID);
+    co2_status = `${translations[getLanguage()].co2} ${mutisensorDevice.param.present.co2.content} ${mutisensorDevice.param.present.co2.measure}`;
+    tvoc_status = `${translations[getLanguage()].tvoc} ${mutisensorDevice.param.present.tvoc.content} ${mutisensorDevice.param.present.tvoc.measure}`;
+    light_status = `${translations[getLanguage()].light} ${mutisensorDevice.param.present.light.content} ${mutisensorDevice.param.present.light.measure}`;
+    temperature_status = `${translations[getLanguage()].temperature} ${mutisensorDevice.param.present.temperature.content} ${mutisensorDevice.param.present.temperature.measure}`;
+    humidity_status = `${translations[getLanguage()].humidity} ${mutisensorDevice.param.present.humidity.content} ${mutisensorDevice.param.present.humidity.measure}`;
     updateUI();
   } catch (error) {
     console.error('Error fetching device ID:', error);
   }
 }
 
-// 实时获取SGP30状态
-async function updateSgp30Status() {
+async function updateMutiSensorStatus() {
     try {
       const response = await fetch(`${API_BASE}/devices`);
       const data = await response.json();
-      const sgp30Device = data.devices.find(d => d.uuid === sgp30UUID);
+      const mutisensorDevice = data.devices.find(d => d.uuid === mutisensorUUID);
   
       // 实际更新状态变量
-      co2_status = `${translations[getLanguage()].co2} ${sgp30Device.param.present.co2.content} ${sgp30Device.param.present.co2.measure}`;
-      tvoc_status = `${translations[getLanguage()].tvoc} ${sgp30Device.param.present.tvoc.content} ${sgp30Device.param.present.tvoc.measure}`;
+      co2_status = `${translations[getLanguage()].co2} ${mutisensorDevice.param.present.co2.content} ${mutisensorDevice.param.present.co2.measure}`;
+      tvoc_status = `${translations[getLanguage()].tvoc} ${mutisensorDevice.param.present.tvoc.content} ${mutisensorDevice.param.present.tvoc.measure}`;
+      light_status = `${translations[getLanguage()].light} ${mutisensorDevice.param.present.light.content} ${mutisensorDevice.param.present.light.measure}`;
+      temperature_status = `${translations[getLanguage()].temperature} ${mutisensorDevice.param.present.temperature.content} ${mutisensorDevice.param.present.temperature.measure}`;
+      humidity_status = `${translations[getLanguage()].humidity} ${mutisensorDevice.param.present.humidity.content} ${mutisensorDevice.param.present.humidity.measure}`;
       
       updateUI();
     } catch (error) {
@@ -142,6 +156,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   await fetchDeviceId();
   
   // 设置定时状态更新
-  setInterval(updateSgp30Status, 1000);
+  setInterval(updateMutiSensorStatus, 1000);
 
 });
