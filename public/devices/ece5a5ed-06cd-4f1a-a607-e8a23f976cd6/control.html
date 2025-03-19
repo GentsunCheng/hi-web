@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="title"></title>
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+<body>
+  <div class="container">
+    <button type="button" onclick="window.location.href = '../../';" style="color: #efefef;"><img class="icon" src="../../assets/back.svg">&nbsp返回</button>
+    <h1 id="name"></h1>
+    <p id="readme"></p>
+    <div class="current-status">
+      <h2 id="current-status"></h2>
+      <ul><li id="power_status"></li></ul>
+      <ul><li id="screen_status"></li></ul>
+      <ul><li id="fan_up_and_down_status"></li></ul>
+      <ul><li id="fan_left_and_right_status"></li></ul>
+      <ul><li id="temperature_status"></li></ul>
+      <ul><li id="mode_status"></li></ul>
+      <ul><li id="wind_status"></li></ul>
+    </div>
+    <div class="adjustable-params">
+      <h2 id="control"></h2>
+    </div>
+    <button type="button" id="power_button" style="width: 110px;"></button>
+    <button type="button" id="mode_button" style="width: 110px;"></button>
+    </br>
+    <button type="button" id="temperature_up_button" style="width: 110px;"></button>
+    <button type="button" id="temperature_down_button" style="width: 110px;"></button>
+    </br>
+    <button type="button" id="fan_up_and_down_button" style="width: 110px;"></button>
+    <button type="button" id="fan_left_and_right_button" style="width: 110px;"></button>
+    </br>
+    <button type="button" id="wind_button" style="width: 110px;"></button>
+    <button type="button" id="screen_button" style="width: 110px;"></button>
+  </div>
+  <script src="./control.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+{
+    "uuid": "ece5a5ed-06cd-4f1a-a607-e8a23f976cd6",
+    "zh-CN": {
+        "name": "空调",
+        "readme": "空调控制，点击查看详情。",
+        "readme_inner": "空调控制，点击查看详情。",
+        "status": {
+            "power": {
+                "name": "电源",
+                "on": "开",
+                "off": "关"
+            },
+            "mode": {
+                "name": "模式",
+                "auto": "自动",
+                "cool": "制冷",
+                "heat": "制热",
+                "wind": "送风",
+                "dry": "除湿"
+            },
+            "temperature": {
+                "name": "温度",
+                "unit": "°C"
+            }
+        }
+    },
+    "en-US": {
+        "name": "Air Conditioner",
+        "readme": "Air Conditioner Control, click to view details.",
+        "readme_inner": "Air Conditioner Control, click to view details.",
+        "status": {
+            "power": {
+                "name": "Power",
+                "on": "On",
+                "off": "Off"
+            },
+            "mode": {
+                "name": "Mode",
+                "auto": "Auto",
+                "cool": "Cool",
+                "heat": "Heat",
+                "wind": "Wind",
+                "dry": "Dry"
+            },
+            "temperature": {
+                "name": "Temperature",
+                "unit": "°C"
+            }
+        }
+    }
+}
