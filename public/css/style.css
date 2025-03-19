@@ -14,6 +14,7 @@
 }
 
 body {
+    padding-bottom: 80px; /* 确保页面内容不会覆盖底部导航栏 */
     font-family: "Circular", sans-serif;
     background-color: #fef7ff; /* MD3 surface container 颜色 */
     margin: 0;
@@ -259,4 +260,78 @@ h2 {
 .menu-icon {
     margin-right: 10px;
     font-size: 16px;
+}
+/* 底栏样式 */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: #fef7ff;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0px -2px 8px rgba(0, 0, 0, 0.08);
+    border-radius: 28px 28px 0 0;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+/* 修改原有.nav-item样式 */
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 24px;
+    border-radius: 16px;
+    color: #79747E;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none !important;
+    position: relative;
+    background: transparent;
+    transform: translateY(0);
+}
+
+.nav-item::after {
+    display: none !important;
+}
+
+/* 新增悬停效果 */
+.nav-item:hover {
+    color: #6750a4;
+    background: rgba(103, 80, 164, 0.08); /* 8%透明度的主色 */
+    transform: translateY(-2px);
+}
+
+.nav-item:hover .nav-icon {
+    animation: iconFloat 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 激活状态优化 */
+.nav-item.active {
+    color: #6750a4;
+    background: rgba(103, 80, 164, 0.12); /* 12%透明度的主色 */
+    transform: translateY(-1px);
+}
+
+.nav-item.active:hover {
+    background: rgba(103, 80, 164, 0.16); /* 更深的悬停状态 */
+}
+
+/* 添加悬浮微动效 */
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+/* 添加点击反馈 */
+.nav-item:active {
+    transform: translateY(1px) scale(0.98);
+    transition-duration: 0.1s;
+}
+
+/* 优化文字过渡 */
+.nav-item span {
+    transition: color 0.2s ease;
 }
