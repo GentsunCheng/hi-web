@@ -22,16 +22,16 @@ app.get("/api/devices", async (req, res) => {
         const devicesData = await response.json();
 
         // 获取 UUID 列表
-        const uuidResponse = await fetch(`${API_BASE_URL}/devices/uuid`, {
+        const sysparamResponse = await fetch(`${API_BASE_URL}/devices/sys_param`, {
             headers: { "X-API-Key": API_KEY },
         });
-        const uuidData = await uuidResponse.json();
+        const sysparamData = await sysparamResponse.json();
 
         // 设备信息添加 UUID，并删除没有 UUID 的设备
         devicesData.devices = devicesData.devices
             .map((device, index) => {
-                if (uuidData[index]) {
-                    device.uuid = uuidData[index];
+                if (sysparamData[index]["show"]) {
+                    device.uuid = sysparamData[index]["uuid"];
                     return device;
                 }
                 return null; // 标记需要删除的项
@@ -46,9 +46,9 @@ app.get("/api/devices", async (req, res) => {
 
 
 // 🔹 获取设备 UUID 列表（可用于调试）
-app.get("/api/devices/uuid", async (req, res) => {
+app.get("/api/devices/sys_param", async (req, res) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/devices/uuid`, {
+        const response = await fetch(`${API_BASE_URL}/devices/sys_param`, {
             headers: { "X-API-Key": API_KEY },
         });
         const data = await response.json();
