@@ -13,6 +13,10 @@
     font-style: normal;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 body {
     padding-bottom: 80px; /* 确保页面内容不会覆盖底部导航栏 */
     font-family: "Circular", sans-serif;
@@ -335,3 +339,35 @@ h2 {
 .nav-item span {
     transition: color 0.2s ease;
 }
+
+/* MD3 输入框样式 */
+.md3-input {
+    display: inline-block;
+    min-width: 50%; /* 设置最小宽度 */
+    max-width: 90%; /* 最大宽度为容器宽度 */
+    padding: 12px 16px;
+    border: 1px solid #79747E33;
+    border-radius: 16px;
+    background-color: #fbf4fc;
+    font-size: 16px;
+    color: #1c1b1f;
+    transition: border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    word-wrap: break-word; /* 允许自动换行 */
+    overflow-wrap: break-word;
+    white-space: pre-wrap; /* 保持空格并自动换行 */
+}
+
+/* 让输入框的宽度随文本内容变化 */
+.md3-input::placeholder {
+    color: #aaa;
+    opacity: 0.7;
+}
+
+/* 焦点状态 */
+.md3-input:focus {
+    border-color: #6750a4;
+    box-shadow: 0 0 0 2px rgba(103, 80, 164, 0.2);
+}
+
+  

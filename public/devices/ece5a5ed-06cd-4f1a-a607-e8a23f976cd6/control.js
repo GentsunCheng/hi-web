@@ -222,7 +222,7 @@ async function sendCommand() {
     
     setTimeout(updateRefrigerationStatus, 1000);
   } catch (error) {
-    reateToast(error.message, 'error');
+    createToast(error.message, 'error');
   }
 }
 

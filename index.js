@@ -10,7 +10,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json()); // 解析 JSON 请求
 
 // 你的后端 API 地址
-const API_BASE_URL = "http://192.168.137.6:5000/api";
+const API_BASE_URL = "http://127.0.0.1:5000/api";
 const API_KEY = "debug_key"; // 你的 API 密钥
 
 // 🔹 获取设备列表，并返回给前端
@@ -57,6 +57,35 @@ app.get("/api/devices/sys_param", async (req, res) => {
         res.status(500).json({ error: "无法获取 UUID" });
     }
 });
+
+app.get("/api/userinfo", async (req, res) => {
+    try{
+        const response = await fetch(`${API_BASE_URL}/userinfo`, {
+            headers: { "X-API-Key": API_KEY },
+        });
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ error: "Unable to get user info" });
+    }
+});
+
+app.post("/api/userinfo", async (req, res) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/userinfo`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-API-Key": API_KEY,
+            },
+            body: JSON.stringify(req.body),
+        });
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ error: "Unable to update user info" });
+    }
+})
 
 // 🔹 设备控制 API，转发给后端
 app.post("/api/control", async (req, res) => {

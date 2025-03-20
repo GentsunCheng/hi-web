@@ -159,7 +159,7 @@ async function controlDoor() {
     createToast(translations[getLanguage()].success, 'success');
     setTimeout(updateDoorStatus, 1000);
   } catch (error) {
-    reateToast(error.message, 'error');
+    createToast(error.message, 'error');
   }
 }
 

@@ -1,14 +1,31 @@
 {
+    "textareas": [
+        "custom"
+    ],
     "zh-CN": {
         "title": "智慧家",
         "device": "设备",
         "header": "用户信息",
-        "user": "用户"
+        "user": "用户",
+        "custom": "用户习惯",
+        "username": "用户名",
+        "designation": "称呼",
+        "save": "保存",
+        "success": "保存成功",
+        "error": "保存失败",
+        "get_error": "用户信息获取失败"
     },
     "en-US": {
         "title": "Home Intelligent",
         "device": "Device",
         "header": "User Information",
-        "user": "User"
+        "user": "User",
+        "custom": "User Habit",
+        "username": "Username",
+        "designation": "Designation",
+        "save": "Save",
+        "success": "Saved successfully",
+        "error": "Save failed",
+        "get_error": "Failed to get user information"
     }
 }
