@@ -1,6 +1,11 @@
 const express = require("express");
 const fetch = require("node-fetch"); // 用于请求后端 API
 const path = require("path");
+const toml = require("toml");
+const fs = require('fs');
+
+const configFile = fs.readFileSync('config.toml', 'utf8');
+const config = toml.parse(configFile);
 
 const app = express();
 const PORT = 3000;
@@ -10,8 +15,8 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json()); // 解析 JSON 请求
 
 // 你的后端 API 地址
-const API_BASE_URL = "http://127.0.0.1:5000/api";
-const API_KEY = "debug_key"; // 你的 API 密钥
+const API_BASE_URL = config.api_url;
+const API_KEY = config.api_key; // 你的 API 密钥
 
 // 🔹 获取设备列表，并返回给前端
 app.get("/api/devices", async (req, res) => {
