@@ -289,7 +289,7 @@ h2 {
     align-items: center;
     padding: 12px 24px;
     border-radius: 16px;
-    color: #79747E;
+    color: #79747e;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-decoration: none !important;
     position: relative;
@@ -325,8 +325,13 @@ h2 {
 
 /* 添加悬浮微动效 */
 @keyframes iconFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3px);
+    }
 }
 
 /* 添加点击反馈 */
@@ -340,18 +345,23 @@ h2 {
     transition: color 0.2s ease;
 }
 
+.data-raw {
+    margin-bottom: 100px;
+}
+
 /* MD3 输入框样式 */
 .md3-input {
     display: inline-block;
     min-width: 90%; /* 设置最小宽度 */
     max-width: 95%; /* 最大宽度为容器宽度 */
     padding: 12px 16px;
-    border: 1px solid #79747E33;
+    border: 1px solid #79747e33;
     border-radius: 16px;
     background-color: #fbf4fc;
     font-size: 16px;
     color: #1c1b1f;
-    transition: border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     outline: none;
     word-wrap: break-word; /* 允许自动换行 */
     overflow-wrap: break-word;
@@ -369,5 +379,3 @@ h2 {
     border-color: #6750a4;
     box-shadow: 0 0 0 2px rgba(103, 80, 164, 0.2);
 }
-
-  
