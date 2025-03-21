@@ -2,12 +2,14 @@
     "zh-CN": {
         "title": "智慧家",
         "device": "设备",
+        "voice": "语音",
         "header": "设备列表",
         "user": "用户"
     },
     "en-US": {
         "title": "Home Intelligent",
         "device": "Device",
+        "voice": "Voice",
         "header": "Device List",
         "user": "User"
     }

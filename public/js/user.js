@@ -10,6 +10,7 @@ function updateUI(lang = getLanguage()) {
     document.getElementById("title").textContent = config[lang].title;
     document.getElementById("header").textContent = config[lang].header;
     document.getElementById("device").textContent = config[lang].device;
+    document.getElementById("voice").textContent = config[lang].voice;
     document.getElementById("user").textContent = config[lang].user;
 }
 

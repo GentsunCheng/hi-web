@@ -5,6 +5,7 @@
     "zh-CN": {
         "title": "智慧家",
         "device": "设备",
+        "voice": "语音",
         "header": "用户信息",
         "user": "用户",
         "custom": "用户习惯",
@@ -18,6 +19,7 @@
     "en-US": {
         "title": "Home Intelligent",
         "device": "Device",
+        "voice": "Voice",
         "header": "User Information",
         "user": "User",
         "custom": "User Habit",
