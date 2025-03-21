@@ -10,8 +10,9 @@ const fs = require("fs");
 const configFile = fs.readFileSync("config.toml", "utf8");
 const config = toml.parse(configFile);
 
+const args = process.argv.slice(2);
 const app = express();
-const PORT = 3000;
+let PORT = 3000;
 
 // 设置静态文件目录
 app.use(express.static(path.join(__dirname, "public")));
@@ -19,21 +20,21 @@ app.use(express.json()); // 解析 JSON 请求
 
 // 你的后端 API 地址
 const API_BASE_URL = config.api_url;
-const API_KEY = config.api_key; // 你的 API 密钥
+let API_KEY = config.api_key; // 你的 API 密钥
 const upload = multer({ storage: multer.memoryStorage() });
 
 const CF_ACCOUNT_ID = config.cf_account_id;
 const CF_API_TOKEN = config.cf_api_token;
 
 args.forEach((arg) => {
-    if (arg.startsWith("--port=")) {
-        PORT = arg.split("=")[1];
-    } else if (arg.startsWith("-p=")) {
-        PORT = arg.split("=")[1];
-    } else if (arg.startsWith("--api_key=")) {
-        API_KEY = arg.split("=")[1];
-    } else if (arg.startsWith("-k=")) {
-        API_KEY = arg.split("=")[1];
+    const match = arg.match(/^--?(p|port|k|api_key)=(.+)$/);
+    if (match) {
+        const [, key, value] = match;
+        if (key === "p" || key === "port") {
+            PORT = value;
+        } else if (key === "k" || key === "api_key") {
+            API_KEY = value;
+        }
     }
 });
 
