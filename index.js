@@ -56,6 +56,17 @@ app.get("/api/devices", async (req, res) => {
     }
 });
 
+app.get("/api/special_devices", async (req, res) => {
+    try {
+        const response = await fetch(`${API_BASE_URL}/special_devices`, {
+            headers: { "X-API-Key": API_KEY },
+        });
+        const devicesData = await response.json();
+        res.json(devicesData);
+    } catch (error) {
+        res.status(500).json({ error: "无法获取设备列表" });
+    }
+});
 
 // 🔹 获取设备 UUID 列表（可用于调试）
 app.get("/api/devices/sys_param", async (req, res) => {

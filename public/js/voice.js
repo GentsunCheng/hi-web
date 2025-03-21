@@ -165,7 +165,7 @@ function stopRecording() {
 
 async function fetchDeviceId() {
     try {
-      const response = await fetch(`${API_BASE}/devices`);
+      const response = await fetch(`${API_BASE}/special_devices`);
       const data = await response.json();
       const voiceDevice = data.devices.find(d => d.uuid === voiceUUID);
       deviceId = voiceDevice?.id;
