@@ -25,6 +25,18 @@ const upload = multer({ storage: multer.memoryStorage() });
 const CF_ACCOUNT_ID = config.cf_account_id;
 const CF_API_TOKEN = config.cf_api_token;
 
+args.forEach((arg) => {
+    if (arg.startsWith('--port=')) {
+        PORT = arg.split('=')[1];
+    } else if (arg.startsWith('-p=')) {
+        PORT = arg.split('=')[1];
+    } else if (arg.startsWith('--api_key=')) {
+        API_KEY = arg.split('=')[1];
+    } else if (arg.startsWith('-k=')) {
+        API_KEY = arg.split('=')[1];
+    }
+  });
+
 // 🔹 获取设备列表，并返回给前端
 app.get("/api/devices", async (req, res) => {
     try {
