@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title id="title"></title>
+        <link rel="stylesheet" href="../../css/style.css" />
+    </head>
+    <body>
+        <div class="container">
+            <button
+                type="button"
+                onclick="window.location.href = '../../';"
+                style="color: #efefef"
+            >
+                <img class="icon" src="../../assets/back.svg" />&nbsp返回
+            </button>
+            <h1 id="name"></h1>
+            <p id="readme"></p>
+            <div class="current-status">
+                <h2 id="current-status"></h2>
+                <ul>
+                    <li id="status"></li>
+                </ul>
+            </div>
+            <div class="adjustable-params">
+                <h2 id="control"></h2>
+            </div>
+            <input type="color" id="colorPicker" value="#ff0000" />
+            <style>
+                #colorPicker {
+                    width: 40px; /* 设置宽度 */
+                    height: 40px; /* 设置高度（与宽度相同，形成正方形） */
+                    border: none; /* 移除默认边框 */
+                    background: none; /* 移除默认背景 */
+                    padding: 0; /* 移除内边距 */
+                    border-radius: 50%; /* 圆角设为50%形成圆形 */
+                    cursor: pointer; /* 鼠标悬停时显示手型指针 */
+                }
+
+                /* 针对 WebKit 浏览器（如 Chrome/Safari） */
+                #colorPicker::-webkit-color-swatch-wrapper {
+                    padding: 0; /* 移除内部容器的内边距 */
+                }
+                #colorPicker::-webkit-color-swatch {
+                    border: none; /* 移除颜色块的边框 */
+                    border-radius: 50%; /* 颜色块设为圆形 */
+                }
+
+                /* 针对 Firefox */
+                #colorPicker::-moz-color-swatch {
+                    border: none; /* 移除颜色块边框 */
+                    border-radius: 50%; /* 颜色块设为圆形 */
+                }
+            </style>
+            <br />
+            <button type="button" id="send-control"></button>
+        </div>
+        <script src="./control.js"></script>
+    </body>
+</html>

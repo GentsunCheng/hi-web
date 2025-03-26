@@ -1,0 +1,21 @@
+{
+    "uuid": "5090e2fe-56df-452f-9b40-7a9c871257c9",
+    "zh-CN": {
+        "name": "RGB灯",
+        "readme": "这是一个RGB灯。可以用来控制RGB灯的颜色和亮度。",
+        "title": "状态",
+        "status": {
+            "on": "开",
+            "off": "关"
+        }
+    },
+    "en-US": {
+        "name": "RGB Light",
+        "readme": "This is an RGB light. It can be used to control the color and brightness of the RGB light.",
+        "title": "Status",
+        "status": {
+            "on": "On",
+            "off": "Off"
+        }
+    }
+}
