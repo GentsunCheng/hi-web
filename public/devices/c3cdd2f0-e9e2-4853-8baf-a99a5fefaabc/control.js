@@ -18,7 +18,7 @@ const translations = {
     'status': { open: '已开启', closed: '已关闭' },
     'button': { open: '立即开启', closed: '立即关闭' },
     'error': '操作失败：',
-    'success': { open: '开启指令已发送', closed: '关闭指令已发送' },
+    'success': { open: '已开启窗帘', closed: '已关闭窗帘' },
     'retry': '正在重试获取状态...',
     'config_error': '配置加载失败'
   },
@@ -31,7 +31,7 @@ const translations = {
     'status': { open: 'Open', closed: 'Closed' },
     'button': { open: 'Open Now', closed: 'Close Now' },
     'error': 'Operation failed: ',
-    'success': { open: 'Open command sent', closed: 'Close command sent' },
+    'success': { open: 'Curtain opened', closed: 'Curtain closed' },
     'retry': 'Retrying status...',
     'config_error': 'Config load failed'
   }

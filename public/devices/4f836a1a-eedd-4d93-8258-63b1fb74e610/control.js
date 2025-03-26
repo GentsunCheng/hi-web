@@ -18,7 +18,7 @@ const translations = {
     'status': { opened: '已开启', closed: '已关闭' },
     'button': '立即开门',
     'error': '操作失败：',
-    'success': '开门指令已发送',
+    'success': '已开门',
     'retry': '正在重试获取状态...',
     'config_error': '配置加载失败'
   },
@@ -31,7 +31,7 @@ const translations = {
     'status': { opened: 'Open', closed: 'Closed' },
     'button': 'Open Now',
     'error': 'Operation failed: ',
-    'success': 'Open command sent',
+    'success': 'Door opened',
     'retry': 'Retrying status...',
     'config_error': 'Config load failed'
   }
