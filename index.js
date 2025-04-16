@@ -23,9 +23,6 @@ const API_BASE_URL = config.api_url;
 let API_KEY = config.api_key; // 你的 API 密钥
 const upload = multer({ storage: multer.memoryStorage() });
 
-const CF_ACCOUNT_ID = config.cf_account_id;
-const CF_API_TOKEN = config.cf_api_token;
-
 args.forEach((arg) => {
     const match = arg.match(/^--?(p|port|k|api_key)=(.+)$/);
     if (match) {
