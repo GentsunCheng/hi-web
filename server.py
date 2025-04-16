@@ -1,11 +1,10 @@
 import os
-import sys
 import wave
 import tempfile
 import argparse
 import requests
 import toml
-import whisper
+import threading
 from flask import Flask, request, jsonify, send_from_directory
 
 # 加载配置文件 config.toml
@@ -23,7 +22,33 @@ args = parser.parse_args()
 PORT = args.port
 API_KEY = args.api_key
 
-# 创建 Flask 应用，设置静态文件目录为 public
+# 全局变量和锁，用于管理 Whisper 模型
+model_lock = threading.Lock()
+model_loaded = False
+whisper_model = None
+
+def load_whisper_model():
+    """在子线程中加载 Whisper 模型"""
+    global whisper_model, model_loaded
+    try:
+        import whisper  # 延迟导入以加速启动
+        # 加载模型（根据需求调整模型大小）
+        model = whisper.load_model("base")
+        with model_lock:
+            whisper_model = model
+            model_loaded = True
+        print("[INFO] Whisper 模型加载完成")
+    except Exception as e:
+        print("[ERROR] 加载 Whisper 模型失败:", e)
+        with model_lock:
+            model_loaded = False
+
+# 启动模型加载线程
+load_thread = threading.Thread(target=load_whisper_model)
+load_thread.daemon = True  # 设为守护线程，主退出时自动终止
+load_thread.start()
+
+# 创建 Flask 应用
 app = Flask(__name__, static_folder="public", static_url_path="")
 
 @app.route("/")
@@ -113,12 +138,15 @@ def post_control():
 def get_control():
     return jsonify({"status": "ok", "message": "Server is running"})
 
-# 🔹 加载本地 Whisper 模型（根据资源选择 tiny、base、small、medium、large，这里以 base 为例）
-whisper_model = whisper.load_model("base")
-
-# 🔹 语音识别接口，接收上传的 WAV 文件并使用本地模型进行识别
+# 🔹 语音识别接口（添加模型状态检查）
 @app.route("/api/whisper", methods=["POST"])
 def api_whisper():
+    # 检查模型是否就绪
+    with model_lock:
+        if not model_loaded:
+            return jsonify({"error": "语音识别功能正在初始化，请稍后重试"}), 503
+        local_model = whisper_model  # 获取本地模型引用
+
     try:
         if "file" not in request.files:
             return jsonify({"error": "没有接收到音频文件"}), 400
@@ -127,28 +155,29 @@ def api_whisper():
         if file.filename == "":
             return jsonify({"error": "没有选择文件"}), 400
 
-        # 读取文件内容，并输出前 50 个字节的十六进制内容作为日志
+        # 处理文件内容
         file_bytes = file.read()
-        print("收到音频文件:", file.filename)
-        print(file_bytes.hex()[:100])  # 50字节 * 2=100个字符
+        print("[DEBUG] 收到音频文件:", file.filename)
 
-        # 将上传的文件保存为临时 WAV 文件
+        # 保存临时文件
         with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
             tmp.write(file_bytes)
             tmp_filename = tmp.name
 
-        # 输出 WAV 文件格式信息
+        # 验证文件格式
         try:
             with wave.open(tmp_filename, "rb") as wf:
-                print("WAV 文件格式:", wf.getparams())
+                params = wf.getparams()
+                print(f"[DEBUG] WAV 格式: {params}")
         except Exception as err:
             os.remove(tmp_filename)
-            return jsonify({"error": f"解析WAV文件失败: {str(err)}"}), 400
+            return jsonify({"error": f"无效的音频格式: {str(err)}"}), 400
 
-        # 使用本地 Whisper 模型进行语音识别
+        # 执行语音识别（确保线程安全）
         try:
-            result = whisper_model.transcribe(tmp_filename)
-            print("识别结果:", result)
+            with model_lock:  # 加锁保证单线程推理
+                result = local_model.transcribe(tmp_filename)
+            print(f"[INFO] 识别结果: {result['text']}")
         except Exception as err:
             os.remove(tmp_filename)
             return jsonify({"error": f"识别失败: {str(err)}"}), 500
@@ -156,8 +185,8 @@ def api_whisper():
         os.remove(tmp_filename)
         return jsonify(result)
     except Exception as e:
-        print("语音识别处理失败：", e)
-        return jsonify({"error": "请求处理失败"}), 500
+        print("[ERROR] 语音识别异常:", e)
+        return jsonify({"error": "内部服务器错误"}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=PORT)
+    app.run(host="0.0.0.0", port=PORT, threaded=True)
