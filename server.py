@@ -148,6 +148,7 @@ def api_whisper():
         # 使用本地 Whisper 模型进行语音识别
         try:
             result = whisper_model.transcribe(tmp_filename)
+            print("识别结果:", result)
         except Exception as err:
             os.remove(tmp_filename)
             return jsonify({"error": f"识别失败: {str(err)}"}), 500
