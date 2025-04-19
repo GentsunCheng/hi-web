@@ -5,7 +5,7 @@ import argparse
 import requests
 import toml
 import threading
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, current_app, send_from_directory
 
 # 加载配置文件 config.toml
 with open("config.toml", "r", encoding="utf-8") as f:
@@ -60,25 +60,37 @@ def index():
 def get_devices():
     try:
         headers = {"X-API-Key": API_KEY}
-        response = requests.get(f"{API_BASE_URL}/devices", headers=headers)
-        devices_data = response.json()
 
-        # 获取 UUID 列表
-        sysparam_response = requests.get(f"{API_BASE_URL}/devices/sys_param", headers=headers)
-        sysparam_data = sysparam_response.json()
+        # 请求设备列表
+        devices_resp = requests.get(f"{API_BASE_URL}/devices", headers=headers)
+        devices_resp.raise_for_status()
+        devices_data = devices_resp.json()
 
-        # 设备信息添加 UUID，并删除没有 UUID 的设备
-        devices = []
-        for idx, device in enumerate(devices_data.get("devices", [])):
-            if idx < len(sysparam_data) and sysparam_data[idx].get("show"):
-                device["uuid"] = sysparam_data[idx].get("uuid")
-                devices.append(device)
-        devices_data["devices"] = devices
+        # 请求系统参数（包含 uuid 和 show 字段）
+        sysparam_resp = requests.get(f"{API_BASE_URL}/devices/sys_param", headers=headers)
+        sysparam_resp.raise_for_status()
+        sysparam_data = sysparam_resp.json()
 
+        # 根据设备 id 过滤并添加 uuid
+        filtered_devices = []
+        for device in devices_data.get("devices", []):
+            device_id = device.get("id")
+            # sysparam_data 的键是字符串形式的 id
+            sp = sysparam_data.get(str(device_id))
+            if sp and sp.get("show"):
+                device["uuid"] = sp.get("uuid")
+                filtered_devices.append(device)
+
+        devices_data["devices"] = filtered_devices
         return jsonify(devices_data)
-    except Exception as e:
-        print("获取设备列表错误：", e)
+
+    except requests.exceptions.RequestException as e:
+        current_app.logger.error(f"获取设备列表请求错误：{e}")
         return jsonify({"error": "无法获取设备列表"}), 500
+
+    except Exception as e:
+        current_app.logger.exception("处理设备列表时出错")
+        return jsonify({"error": "服务器内部错误"}), 500
 
 # 🔹 获取特殊设备列表接口
 @app.route("/api/special_devices", methods=["GET"])
