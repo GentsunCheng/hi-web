@@ -33,7 +33,7 @@ def load_whisper_model():
     try:
         import whisper  # 延迟导入以加速启动
         # 加载模型（根据需求调整模型大小）
-        model = whisper.load_model("base")
+        model = whisper.load_model("small")
         with model_lock:
             whisper_model = model
             model_loaded = True
