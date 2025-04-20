@@ -131,7 +131,7 @@ async function uploadAudio(wavBlob) {
         });
         const results = await response.json();
         await fetchDeviceId();
-        sendcommand(results.result.text);
+        sendcommand(results.text);
         console.log("转录结果:", results);
     } catch (error) {
         console.error("上传失败", error);
