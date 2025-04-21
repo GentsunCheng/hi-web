@@ -132,6 +132,7 @@ async function uploadAudio(wavBlob) {
         const results = await response.json();
         await fetchDeviceId();
         sendcommand(results.text);
+        createToast(results.text, 'info');
         console.log("转录结果:", results);
     } catch (error) {
         console.error("上传失败", error);
@@ -160,7 +161,6 @@ function stopRecording() {
     audioContext?.close(); // 如果使用了 AudioContext，关闭它
     audioContext = null; // 清理 AudioContext
 }
-
 
 
 async function fetchDeviceId() {
@@ -207,3 +207,43 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.addEventListener("touchstart", startRecording);
     btn.addEventListener("touchend", stopRecording);
 });
+
+function createToast(message, type = 'info') {
+    const container = document.querySelector('.toast-container') || createToastContainer();
+    const toast = document.createElement('div');
+    
+    // 创建Toast元素
+    toast.className = 'toast';
+    toast.dataset.type = type;
+    toast.innerHTML = `
+      <svg class="toast-icon" viewBox="0 0 24 24">
+        ${type === 'success' ? 
+          '<path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>' :
+          '<path fill="currentColor" d="M11 15h2v2h-2zm0-8h2v6h-2zm1-5C6.47 2 2 6.5 2 12a10 10 0 0 0 10 10a10 10 0 0 0 10-10A10 10 0 0 0 12 2m0 18a8 8 0 0 1-8-8a8 8 0 0 1 8-8a8 8 0 0 1 8 8a8 8 0 0 1-8 8"/>'} 
+      </svg>
+      <span>${message}</span>
+    `;
+  
+    // 添加自动消失逻辑
+    const hideTimer = setTimeout(() => {
+      toast.classList.add('hide');
+      toast.addEventListener('animationend', () => toast.remove());
+    }, 4000);
+  
+    // 点击立即关闭
+    toast.addEventListener('click', () => {
+      clearTimeout(hideTimer);
+      toast.classList.add('hide');
+      toast.addEventListener('animationend', () => toast.remove());
+    });
+  
+    container.appendChild(toast);
+    return toast;
+  }
+  
+  function createToastContainer() {
+    const container = document.createElement('div');
+    container.className = 'toast-container';
+    document.body.appendChild(container);
+    return container;
+  }
